@@ -1,25 +1,48 @@
-import FormAnt from './form.component'
+import FormAnt from "./form.component";
 
 import { Modal, Button } from "antd";
 import { useState } from "react";
+import { useMutation } from "@apollo/client";
 
+import {CREATE_NEW_SERVICE, GET_SERVICES_BY_CATEGORY_ID} from "../GraphQL/Queries";
 
 const FormModal = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const[createNewService, setCreateNewService] = useState(null)
+
+  // Create new service state and function
+  const [categoryId, setCategoryId] = useState(null)
+  const [newServiceName, setNewServiceName] = useState(null)
+
+  const [CreateNewService] = useMutation(CREATE_NEW_SERVICE, {
+    variables: {
+      category_id: categoryId,
+      name: newServiceName,
+      in_clinic: false,
+      price: 321,
+      rating: 5,
+      duration: 45,
+    },
+    refetchQueries:[{
+      query: GET_SERVICES_BY_CATEGORY_ID,
+      variables:{
+        category_id: categoryId
+      }
+    }]
+  });
 
   const showModal = () => {
     setIsModalVisible(true);
   };
 
-  const handleOk = () => {
-    setIsModalVisible(false)
-    createNewService()
+  const handleOk = (val) => {
+    CreateNewService()
+    setIsModalVisible(false);
   };
 
   const handleCancel = () => {
     setIsModalVisible(false);
   };
+
 
   return (
     <>
@@ -32,7 +55,7 @@ const FormModal = () => {
         onOk={handleOk}
         onCancel={handleCancel}
       >
-       <FormAnt setCreateNewService={setCreateNewService}/>
+        <FormAnt setCategoryId={setCategoryId} setNewServiceName={setNewServiceName}/>
       </Modal>
     </>
   );
