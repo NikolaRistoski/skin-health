@@ -3,7 +3,7 @@ import { gql } from "@apollo/client";
 
 export const GET_ALL_MASTER_CATEGORIES = gql`
 query getAllCategories {
-    master_categories {
+    master_categories(order_by: {order: asc}) {
       name
       image
       id

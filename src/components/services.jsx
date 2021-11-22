@@ -2,7 +2,7 @@ import { MedicineBoxOutlined, LaptopOutlined } from "@ant-design/icons";
 
 import { useQuery } from "@apollo/client";
 import { Col, Row } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GET_SERVICES_BY_CATEGORY_ID } from "../GraphQL/Queries";
 
 import ServicesCard from "./services_card.component";
@@ -17,6 +17,7 @@ const Services = ({ categoryId }) => {
     },
   });
 
+  
   if (loading) return "Loading...";
   if (error) return "Error";
 
