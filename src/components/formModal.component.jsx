@@ -3,14 +3,18 @@ import FormAnt from './form.component'
 import { Modal, Button } from "antd";
 import { useState } from "react";
 
+
 const FormModal = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const[createNewService, setCreateNewService] = useState(null)
+
   const showModal = () => {
     setIsModalVisible(true);
   };
 
   const handleOk = () => {
-    setIsModalVisible(false);
+    setIsModalVisible(false)
+    createNewService()
   };
 
   const handleCancel = () => {
@@ -28,7 +32,7 @@ const FormModal = () => {
         onOk={handleOk}
         onCancel={handleCancel}
       >
-       <FormAnt />
+       <FormAnt setCreateNewService={setCreateNewService}/>
       </Modal>
     </>
   );
