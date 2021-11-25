@@ -2,7 +2,7 @@
 import { gql } from "@apollo/client";
 
 export const GET_ALL_MASTER_CATEGORIES = gql`
-query getAllCategories {
+query getAllMasterCategories {
     master_categories(order_by: {order: asc}) {
       name
       image
@@ -39,6 +39,20 @@ export const GET_SERVICES_BY_CATEGORY_ID = gql`
       }
     }
 }`
+
+export const GET_SERVICES = gql`
+  query getServicesByCategoryId($category_id: uuid) {
+      services(where: {category_id: {_eq: $category_id}}){
+        category_id
+        id
+        in_clinic
+        name
+        price
+        rating
+        duration
+      }
+    }
+`
 
 export const CREATE_NEW_SERVICE = gql`
   mutation CreateNewService($category_id: uuid!, $name: String!, $in_clinic: Boolean, $price: float8, $rating: Int, $duration: Int) {
